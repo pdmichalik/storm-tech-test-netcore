@@ -17,6 +17,9 @@
             <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
                 <strong>Add New Item</strong>
             </a>
+            <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-undoneOnly="true">
+                <strong>Hide items marked as done</strong>
+            </a>
         </li>
 
         @foreach (var item in Model.Items.OrderByImportanceDescending())

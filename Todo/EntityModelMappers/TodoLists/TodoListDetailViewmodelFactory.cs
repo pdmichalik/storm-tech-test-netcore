@@ -7,9 +7,11 @@ namespace Todo.EntityModelMappers.TodoLists
 {
     public static class TodoListDetailViewmodelFactory
     {
-        public static TodoListDetailViewmodel Create(TodoList todoList)
+        public static TodoListDetailViewmodel Create(TodoList todoList, bool undoneOnly = false)
         {
-            var items = todoList.Items.Select(TodoItemSummaryViewmodelFactory.Create).ToList();
+            var todoListItems =
+                undoneOnly ? todoList.Items.Where(todoItem => todoItem.IsDone == false) : todoList.Items;
+            var items = todoListItems.Select(TodoItemSummaryViewmodelFactory.Create).ToList();
             return new TodoListDetailViewmodel(todoList.TodoListId, todoList.Title, items);
         }
     }
