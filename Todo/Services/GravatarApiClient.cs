@@ -9,6 +9,7 @@ namespace Todo.Services
     public class GravatarApiClient
     {
         private HttpClient httpClient;
+        private const string defaultGravatarImage = "http://www.gravatar.com/avatar";
 
         public GravatarApiClient(HttpClient httpClient)
         {
@@ -17,12 +18,24 @@ namespace Todo.Services
 
         public async Task<(string, string)> GetProfile(string email)
         {
-            var response = await httpClient.GetFromJsonAsync<Response>($"{email.GetHash()}.json");
-            var entry = response.entry.FirstOrDefault();
-            if (entry == null) return ("", "");
-            var name = entry.displayName;
-            var photo = entry.photos != null && entry.photos.Any() && !string.IsNullOrWhiteSpace(entry.photos.First().value) ? entry.photos.First().value : "";
-            return (name, photo);
+            try
+            {
+                var emailHash = email.GetHash();
+                var response = await httpClient.GetFromJsonAsync<Response>($"{emailHash}.json");
+                var entry = response.entry.FirstOrDefault();
+                if (entry == null) return ("", "");
+                var name = entry.displayName;
+                var photo = entry.photos != null && entry.photos.Any() &&
+                            !string.IsNullOrWhiteSpace(entry.photos.First().value)
+                    ? entry.photos.First().value
+                    : "";
+                return (name, photo);
+            }
+            catch (HttpRequestException)
+            {
+                return ("", defaultGravatarImage);
+            }
+            
         }
 
         public class Response

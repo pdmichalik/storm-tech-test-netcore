@@ -65,7 +65,7 @@
                             var (name, avatarUrl) = await GravatarApiClient.GetProfile(item.ResponsibleParty.UserName);
                         }
 
-                        @item.ResponsibleParty.UserName - @name
+                        @item.ResponsibleParty.UserName @name
 
                         <img src="@avatarUrl?s=30"/>
 
