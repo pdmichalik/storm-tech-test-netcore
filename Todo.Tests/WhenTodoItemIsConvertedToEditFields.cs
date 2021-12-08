@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.Models.TodoItems;
+using Todo.Tests.Builders;
 using Xunit;
 
 namespace Todo.Tests

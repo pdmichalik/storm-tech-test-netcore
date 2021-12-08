@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Todo.Data.Entities;
 using Todo.Models.TodoItems;
 
-namespace Todo.Tests
+namespace Todo.Tests.Builders
 {
     public class TodoItemSummaryViewmodelCollectionBuilder
     {
