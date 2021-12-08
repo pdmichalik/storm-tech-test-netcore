@@ -22,14 +22,14 @@
             @Html.HiddenFor(m => m.TodoListTitle)
 
             <div class="form-group">
-                <label asp-for="Title"></label>
+                <label asp-for="Title">Title</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
 
             <div class="form-group">
-                <label asp-for="Importance"></label>
+                <label asp-for="Importance">Importance</label>
                 @Html.DropDownListFor(
                     m => m.Importance,
                     SelectListConvenience.ImportanceSelectListItems,
@@ -39,7 +39,7 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="ResponsiblePartyId"></label>
+                <label asp-for="ResponsiblePartyId">Responsible party</label>
                 @Html.DropDownListFor(
                     m => m.ResponsiblePartyId,
                     dbContext.UserSelectListItems(),
