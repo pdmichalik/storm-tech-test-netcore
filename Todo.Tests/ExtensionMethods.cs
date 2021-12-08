@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Todo.Data.Entities;
 using Todo.Models.TodoItems;
@@ -15,12 +16,21 @@ namespace Todo.Tests
         [InlineData(new[] { Importance.Low, Importance.Medium, Importance.High }, new[] { Importance.High, Importance.Medium, Importance.Low })]
         public void OrderByImportanceDescending(Importance[] testCaseImportances, Importance[] expected)
         {
-            var todoItemSummaryViewmodelsGiven = testCaseImportances.Select(
-                importance => new TodoItemSummaryViewmodel(0, "", false, null, importance)).ToList();
+            var todoItemSummaryViewmodelsGiven = GetTodoItemSummaryViewmodelList(testCaseImportances);
 
             var todoItemSummaryViewmodelsOrderedByImportance = todoItemSummaryViewmodelsGiven.OrderByImportanceDescending();
 
             Assert.Equal(expected, todoItemSummaryViewmodelsOrderedByImportance.Select(viewmodel => viewmodel.Importance));
+        }
+
+        private static List<TodoItemSummaryViewmodel> GetTodoItemSummaryViewmodelList(IEnumerable<Importance> testCaseImportances)
+        {
+            var todoItemSummaryViewmodelCollectionBuilder = new TodoItemSummaryViewmodelCollectionBuilder();
+            foreach (var importance in testCaseImportances)
+            {
+                todoItemSummaryViewmodelCollectionBuilder.WithItem(importance);
+            }
+            return todoItemSummaryViewmodelCollectionBuilder.Build().ToList();
         }
     }
 }
