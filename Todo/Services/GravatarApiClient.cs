@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -31,9 +32,12 @@ namespace Todo.Services
                     : "";
                 return (name, photo);
             }
-            catch (HttpRequestException)
+            catch (Exception ex)
             {
-                return ("", defaultGravatarImage);
+                if (ex is HttpRequestException || ex is TaskCanceledException)
+                    return ("", defaultGravatarImage);
+
+                throw;
             }
             
         }
