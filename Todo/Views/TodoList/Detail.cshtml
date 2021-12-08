@@ -1,5 +1,4 @@
-﻿@using Todo.Controllers
-@using Todo.Data.Entities
+﻿@using Todo.Data.Entities
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
 
@@ -20,9 +19,12 @@
             <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-undoneOnly="true">
                 <strong>Hide items marked as done</strong>
             </a>
+            <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="true">
+                <strong>Order by rank</strong>
+            </a>
         </li>
 
-        @foreach (var item in Model.Items.OrderByImportanceDescending())
+        @foreach (var item in Model.Items)
         {
             string contextualClass;
             switch (item.Importance)
