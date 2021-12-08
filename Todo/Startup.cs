@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Todo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Todo.Services;
 
 namespace Todo
 {
@@ -44,6 +46,12 @@ namespace Todo
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
+            });
+
+            services.AddHttpClient<GravatarApiClient>(x =>
+            {
+                x.BaseAddress = new Uri("https://en.gravatar.com/");
+                x.DefaultRequestHeaders.UserAgent.ParseAdd("TodoApp");
             });
         }
 

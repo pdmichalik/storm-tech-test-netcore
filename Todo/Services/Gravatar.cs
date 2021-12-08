@@ -5,7 +5,7 @@ namespace Todo.Services
 {
     public static class Gravatar
     {
-        public static string GetHash(string emailAddress)
+        public static string GetHash(this string emailAddress)
         {
             using (var md5 = MD5.Create())
             {

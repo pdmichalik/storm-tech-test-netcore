@@ -1,6 +1,7 @@
 ﻿@using Todo.Data.Entities
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
+@inject GravatarApiClient GravatarApiClient
 
 @{
     ViewData["Title"] = $"List: {Model.Title}";
@@ -60,9 +61,13 @@
 
                 <div class="col-md-4 text-right">
                     <small>
-                        @item.ResponsibleParty.UserName
+                        @{
+                            var (name, avatarUrl) = await GravatarApiClient.GetProfile(item.ResponsibleParty.UserName);
+                        }
 
-                        <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
+                        @item.ResponsibleParty.UserName - @name
+
+                        <img src="@avatarUrl?s=30"/>
 
                     </small>
                 </div>
